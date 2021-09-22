@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -11,6 +12,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Main {
 
@@ -24,12 +30,19 @@ public class Main {
     private JMenu menu;
     private JMenuItem close, about;
     private JButton loadBtn, delBtn, moveBtn;
-    private JPanel verticalMenu;
+    private JPanel verticalMenu, displayImg;
+    private File pathImg1, pathImg2;
+    private Image image;
 
     public Main() {
         frame= new JFrame("TP1");
 
+        pathImg1 = new File("TP1/images/image1.jpg");
+        pathImg2 = new File("TP1/images/image2.jpg");
+
         verticalMenu = new JPanel(new GridLayout(3,1));
+        loadImage(pathImg1);
+        displayImg = new ImagePanel(image);
 
         // MENUBAR
         menuBar=new JMenuBar();  
@@ -39,10 +52,10 @@ public class Main {
         menu.add(close); menu.add(about);
         menuBar.add(menu);
 
+        // VERTICAL MENU
         loadBtn = new JButton("Charger une image");
         delBtn = new JButton("Supprimer l'image");
         moveBtn = new JButton("Déplacer l'image");
-
         verticalMenu.add(loadBtn);
         verticalMenu.add(delBtn);
         verticalMenu.add(moveBtn);
@@ -55,9 +68,11 @@ public class Main {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
+        frame.add(displayImg, BorderLayout.CENTER);
         frame.add(verticalMenu, BorderLayout.LINE_START);
-        frame.pack();
         
+        frame.pack();
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         close.addActionListener(new ActionListener() {
@@ -71,6 +86,33 @@ public class Main {
                 JOptionPane.showMessageDialog(frame, "TP1");
             }
         });
+
+        loadBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                loadImage(pathImg2);
+                frame.add(new ImagePanel(image), BorderLayout.CENTER);
+                frame.pack();
+            }
+        });
+
+        delBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                loadImage(pathImg1);
+                frame.add(new ImagePanel(image), BorderLayout.CENTER);
+                frame.pack();
+            }
+        });
+    }
+
+    private boolean loadImage(File path)
+    {
+        try {
+            image = ImageIO.read(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     public static void main(String args[])
