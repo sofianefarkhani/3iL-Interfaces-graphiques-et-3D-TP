@@ -12,6 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +67,7 @@ public class Main {
         frame.setSize(FRAME_WIDTH,FRAME_HEIGHT);  
         frame.setLayout(new BorderLayout()); 
         frame.setVisible(true); 
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
 
         frame.add(displayImg, BorderLayout.CENTER);
@@ -89,9 +91,18 @@ public class Main {
 
         loadBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                loadImage(pathImg2);
-                frame.add(new ImagePanel(image), BorderLayout.CENTER);
-                frame.pack();
+                JFileChooser file = new JFileChooser();
+                file.setCurrentDirectory(new File(System.getProperty("user.home")));
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","png");
+                file.addChoosableFileFilter(filter);
+                int res = file.showSaveDialog(null);
+                if(res == JFileChooser.APPROVE_OPTION){
+                    pathImg2 = file.getSelectedFile();
+                    loadImage(pathImg2);
+                    frame.add(new ImagePanel(image), BorderLayout.CENTER);
+                    frame.pack();
+                }
+                
             }
         });
 
