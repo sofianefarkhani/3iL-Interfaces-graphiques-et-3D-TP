@@ -67,6 +67,7 @@ public class MyFrame extends JFrame{
                 int res = file.showSaveDialog(null);
                 if(res == JFileChooser.APPROVE_OPTION){
                     pathImg=file.getSelectedFile();
+                    remove(imagePanel);
                     imagePanel = new ImagePanel(pathImg.getAbsolutePath());
                     add(imagePanel, BorderLayout.CENTER);
                     pack();
@@ -78,6 +79,7 @@ public class MyFrame extends JFrame{
         verticalMenuPanel.delBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 pathImg=PATH_IMG_DEFAULT;
+                remove(imagePanel);
                 imagePanel = new ImagePanel(pathImg.getAbsolutePath());
                 add(imagePanel, BorderLayout.CENTER);
                 pack();
