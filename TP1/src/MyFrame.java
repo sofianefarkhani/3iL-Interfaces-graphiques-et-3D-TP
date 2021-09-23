@@ -58,7 +58,7 @@ public class MyFrame extends JFrame{
             }
         });
 
-        verticalMenuPanel.loadBtn.addActionListener(new ActionListener() {
+        verticalMenuPanel.getLoadBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser file = new JFileChooser();
                 file.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -76,7 +76,7 @@ public class MyFrame extends JFrame{
             }
         });
 
-        verticalMenuPanel.delBtn.addActionListener(new ActionListener() {
+        verticalMenuPanel.getDelBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 pathImg=PATH_IMG_DEFAULT;
                 remove(imagePanel);

@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 
 public class VerticalMenuPanel extends JPanel{
 
-    public JButton loadBtn, delBtn;
+    private JButton loadBtn, delBtn;
 
     public VerticalMenuPanel() {
         this.setLayout(new GridLayout(3,1));
@@ -13,5 +13,13 @@ public class VerticalMenuPanel extends JPanel{
         delBtn = new JButton("Supprimer l'image");
         this.add(loadBtn);
         this.add(delBtn);
+    }
+
+    public JButton getLoadBtn() {
+        return loadBtn;
+    }
+
+    public JButton getDelBtn() {
+        return delBtn;
     }
 }
