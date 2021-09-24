@@ -4,7 +4,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -61,10 +60,11 @@ public class MyFrame extends JFrame{
         verticalMenuPanel.getLoadBtn().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser file = new JFileChooser();
+                file.setAcceptAllFileFilterUsed(false);
+                file.setDialogTitle("Charger une image");
                 file.setCurrentDirectory(new File(System.getProperty("user.home")));
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","png");
-                file.addChoosableFileFilter(filter);
-                int res = file.showSaveDialog(null);
+                file.addChoosableFileFilter(new ImageFilter());
+                int res = file.showOpenDialog(null);
                 if(res == JFileChooser.APPROVE_OPTION){
                     pathImg=file.getSelectedFile();
                     remove(imagePanel);
