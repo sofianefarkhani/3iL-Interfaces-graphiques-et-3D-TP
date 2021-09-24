@@ -2,14 +2,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JFileChooser;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import java.io.File;
 
@@ -20,6 +15,7 @@ public class MyFrame extends JFrame{
 
     private VerticalMenuPanel verticalMenuPanel = new VerticalMenuPanel();
     private ImagePanel imagePanel;
+    private AppAction appAction;
 
     private JMenuBar menuBar;
     private JMenu menu;
@@ -45,46 +41,13 @@ public class MyFrame extends JFrame{
         this.setLocationRelativeTo(null);
         this.pack();
 
-        close.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        appAction = new AppAction(this, imagePanel);
 
-        about.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "A propos du TP1");
-            }
-        });
+        close.addActionListener(appAction);
+        about.addActionListener(appAction);
 
-        verticalMenuPanel.getLoadBtn().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser file = new JFileChooser();
-                file.setAcceptAllFileFilterUsed(false);
-                file.setDialogTitle("Charger une image");
-                file.setCurrentDirectory(new File(System.getProperty("user.home")));
-                file.addChoosableFileFilter(new ImageFilter());
-                int res = file.showOpenDialog(null);
-                if(res == JFileChooser.APPROVE_OPTION){
-                    pathImg=file.getSelectedFile();
-                    remove(imagePanel);
-                    imagePanel = new ImagePanel(pathImg.getAbsolutePath());
-                    add(imagePanel, BorderLayout.CENTER);
-                    pack();
-                }
-                
-            }
-        });
-
-        verticalMenuPanel.getDelBtn().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                pathImg=PATH_IMG_DEFAULT;
-                remove(imagePanel);
-                imagePanel = new ImagePanel(pathImg.getAbsolutePath());
-                add(imagePanel, BorderLayout.CENTER);
-                pack();
-            }
-        });
+        verticalMenuPanel.getLoadBtn().addActionListener(appAction);
+        verticalMenuPanel.getDelBtn().addActionListener(appAction);
     }
 
     private void createMenuBar() {
@@ -95,5 +58,4 @@ public class MyFrame extends JFrame{
         menu.add(about); menu.add(close);
         menuBar.add(menu);
     }
-
 }
