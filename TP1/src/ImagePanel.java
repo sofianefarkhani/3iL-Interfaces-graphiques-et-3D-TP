@@ -12,8 +12,7 @@ public class ImagePanel extends JPanel{
 
     private ImageIcon image;
     private Point imageCorner;
-    private Point prevPt;
-    //private String path = "images/image1.jpg";
+    private Point prevPt;    
 
     public ImagePanel(String path)
     {
