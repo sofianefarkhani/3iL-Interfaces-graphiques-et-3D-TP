@@ -18,8 +18,6 @@ public class MyFrame extends JFrame{
 
     public MyFrame(String title, int width, int height) {
 
-        // MENUBAR
-
         imagePanel = new ImagePanel(pathImg.getAbsolutePath());
         menuBar = new MyMenuBar();
 
