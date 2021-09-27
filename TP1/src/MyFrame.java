@@ -18,8 +18,6 @@ public class MyFrame extends JFrame{
     private AppAction appAction;
 
     private MyMenuBar menuBar;
-    private JMenu menu;
-    private JMenuItem close, about;
 
     public MyFrame(String title, int width, int height) {
 
