@@ -17,16 +17,16 @@ public class MyFrame extends JFrame{
     private ImagePanel imagePanel;
     private AppAction appAction;
 
-    private JMenuBar menuBar;
+    private MyMenuBar menuBar;
     private JMenu menu;
     private JMenuItem close, about;
 
     public MyFrame(String title, int width, int height) {
 
         // MENUBAR
-        createMenuBar();
 
         imagePanel = new ImagePanel(pathImg.getAbsolutePath());
+        menuBar = new MyMenuBar();
 
         this.setLayout(new BorderLayout());
         this.setJMenuBar(menuBar);
@@ -43,19 +43,10 @@ public class MyFrame extends JFrame{
 
         appAction = new AppAction(this, imagePanel);
 
-        close.addActionListener(appAction);
-        about.addActionListener(appAction);
+        menuBar.getCloseItem().addActionListener(appAction);
+        menuBar.getAboutItem().addActionListener(appAction);
 
         verticalMenuPanel.getLoadBtn().addActionListener(appAction);
         verticalMenuPanel.getDelBtn().addActionListener(appAction);
-    }
-
-    private void createMenuBar() {
-        menuBar=new JMenuBar();  
-        menu=new JMenu("Menu");
-        about=new JMenuItem("A propos");
-        close=new JMenuItem("Fermer");  
-        menu.add(about); menu.add(close);
-        menuBar.add(menu);
     }
 }
