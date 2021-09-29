@@ -32,11 +32,9 @@ public class AppAction implements ActionListener {
                 graphicPanel.addGLEventListener(new Cube());
                 break;
             case "Triangle RGB":
-                //graphicPanel.removeGLEventListener(new Square());
                 graphicPanel.addGLEventListener(new Triangle());
                 break;
             case "Reset":
-                //graphicPanel.removeGLEventListener(new Square());
                 graphicPanel.addGLEventListener(new Square());
                 break;
             case "Start/Stop rotation":
