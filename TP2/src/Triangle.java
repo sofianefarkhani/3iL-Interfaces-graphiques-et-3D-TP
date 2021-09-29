@@ -9,6 +9,11 @@ import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 public class Triangle implements GLEventListener {
 
     private float rotate;
+    private float colour[] = {
+        255, 0, 0,
+        0, 255, 0,
+        0, 0, 255
+    };
 
     public Triangle() {
         rotate = 0.0f;
@@ -59,10 +64,12 @@ public class Triangle implements GLEventListener {
         gl.glRotatef(rotate, 0.0f, 0.0f, 1.0f);
 
         // Draw triangle
-        gl.glBegin(GL2.GL_TRIANGLES);
-        gl.glColor3f(0.0f, 1.0f, 1.0f);
+        gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+        gl.glColor3f(0.0f, 1.0f, 0f);  
         gl.glVertex3f(-1.0f, 1.0f, 0.0f); // Set a point at top left
+        gl.glColor3f(1f,0f,0f);   
         gl.glVertex3f(1.0f, 1.0f, 0.0f); // Set a point at top right
+        gl.glColor3f(0f,0f,1f);   
         gl.glVertex3f(1.0f, -1.0f, 0.0f); // Set a point at bottom right
         gl.glEnd();
 
