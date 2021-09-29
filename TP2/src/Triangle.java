@@ -9,11 +9,6 @@ import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 public class Triangle implements GLEventListener {
 
     private float rotate;
-    private float colour[] = {
-        255, 0, 0,
-        0, 255, 0,
-        0, 0, 255
-    };
 
     public Triangle() {
         rotate = 0.0f;
