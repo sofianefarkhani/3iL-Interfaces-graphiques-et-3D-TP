@@ -58,9 +58,44 @@ public class Cube implements GLEventListener {
         gl.glRotatef(rotate, 0.0f, 0.0f, 1.0f);
 
         // Draw cube
-        gl.glBegin(GL2.GL_CUBIC_EXT);
-        gl.glColor3f(0.0f, 1.0f, 1.0f);
-        gl.glEnd();
+        gl.glBegin(GL2.GL_QUADS);
+        gl.glColor3f(0f,0f,1f); //Blue color  
+        //Top Quadrilateral  
+        gl.glVertex3f(0.5f, 0.5f, -0.5f); //Upper Right  
+        gl.glVertex3f( -0.5f, 0.5f, -0.5f); // Upper Left  
+        gl.glVertex3f( -0.5f, 0.5f, 0.5f ); // Bottom Left  
+        gl.glVertex3f( 0.5f, 0.5f, 0.5f ); // Bottom Right  
+                //Below Quadrilateral  
+        gl.glColor3f( 1f,0f,0f ); //Red color  
+        gl.glVertex3f( 0.5f, -0.5f, 0.5f ); // Upper Right   
+        gl.glVertex3f( -0.5f, -0.5f, 0.5f ); // Upper Left   
+        gl.glVertex3f( -0.5f, -0.5f, -0.5f ); // Bottom Left   
+        gl.glVertex3f( 0.5f, -0.5f, -0.5f ); // Bottom Right   
+            //Front Quadrilateral  
+        gl.glColor3f( 0f,1f,0f ); //Green color  
+        gl.glVertex3f( 0.5f, 0.5f, 0.5f ); // Upper Right   
+        gl.glVertex3f( -0.5f, 0.5f, 0.5f ); // Upper Left   
+        gl.glVertex3f( -0.5f, -0.5f, 0.5f ); // Bottom Left   
+        gl.glVertex3f( 0.5f, -0.5f, 0.5f ); // Bottom Right  
+            //Back Quadrilateral  
+        gl.glColor3f( 1f,1f,0f ); //Yellow  
+        gl.glVertex3f( 0.5f, -0.5f, -0.5f ); // Bottom Left   
+        gl.glVertex3f( -0.5f, -0.5f, -0.5f ); // Bottom Right   
+        gl.glVertex3f( -0.5f, 0.5f, -0.5f ); // Upper Right   
+        gl.glVertex3f( 0.5f, 0.5f, -0.5f ); // Upper Left   
+            //Left Quadrilateral  
+        gl.glColor3f( 1f,0f,1f ); //Purple  
+        gl.glVertex3f( -0.5f, 0.5f, 0.5f ); // Upper Right  
+        gl.glVertex3f( -0.5f, 0.5f, -0.5f ); // Upper Left   
+        gl.glVertex3f( -0.5f, -0.5f, -0.5f ); // Bottom Left   
+        gl.glVertex3f( -0.5f, -0.5f, 0.5f ); // Bottom Right   
+            //Right Quadrilateral  
+        gl.glColor3f( 0f,1f, 1f ); //Cyan  
+        gl.glVertex3f( 0.5f, 0.5f, -0.5f ); // Upper Right   
+        gl.glVertex3f( 0.5f, 0.5f, 0.5f ); // Upper Left   
+        gl.glVertex3f( 0.5f, -0.5f, 0.5f ); // Bottom Left   
+        gl.glVertex3f( 0.5f, -0.5f, -0.5f ); // Bottom Right   
+        gl.glEnd();   
 
         // Increase rotation :
         rotate += 0.2f;

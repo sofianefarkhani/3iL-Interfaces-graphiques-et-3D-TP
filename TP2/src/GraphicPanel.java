@@ -11,6 +11,7 @@ public class GraphicPanel extends GLCanvas{
                 this.addGLEventListener(new Triangle());
                 break;
             case "cube":
+                this.addGLEventListener(new Cube());
                 break;
         }
         this.requestFocus();
