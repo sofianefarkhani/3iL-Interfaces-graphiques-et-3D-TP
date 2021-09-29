@@ -23,7 +23,7 @@ public class MyFrame extends JFrame{
         animator = new Animator(graphicPanel);
         animator.start();
 
-        appAction = new AppAction(this, animator);
+        appAction = new AppAction(this, animator, graphicPanel);
 
 
         menuBar.getCloseItem().addActionListener(appAction);

@@ -65,7 +65,7 @@ public class Cube implements GLEventListener {
         gl.glVertex3f( -0.5f, 0.5f, -0.5f); // Upper Left  
         gl.glVertex3f( -0.5f, 0.5f, 0.5f ); // Bottom Left  
         gl.glVertex3f( 0.5f, 0.5f, 0.5f ); // Bottom Right  
-                //Below Quadrilateral  
+        //Below Quadrilateral  
         gl.glColor3f( 1f,0f,0f ); //Red color  
         gl.glVertex3f( 0.5f, -0.5f, 0.5f ); // Upper Right   
         gl.glVertex3f( -0.5f, -0.5f, 0.5f ); // Upper Left   

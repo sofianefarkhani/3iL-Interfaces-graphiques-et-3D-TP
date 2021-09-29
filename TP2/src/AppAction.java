@@ -10,11 +10,13 @@ public class AppAction implements ActionListener {
 
     private JFrame frame;
     private Animator animator;
+    private GraphicPanel graphicPanel;
 
-    public AppAction(JFrame frame, Animator animator)
+    public AppAction(JFrame frame, Animator animator, GraphicPanel graphicPanel)
     {
         this.frame = frame;
         this.animator = animator;
+        this.graphicPanel = graphicPanel;
     }
 
     public void actionPerformed(ActionEvent evt) {
@@ -27,10 +29,15 @@ public class AppAction implements ActionListener {
                 JOptionPane.showMessageDialog(frame, "A propos du TP2");
                 break;
             case "Cube RGB":
+                graphicPanel.addGLEventListener(new Cube());
                 break;
             case "Triangle RGB":
+                //graphicPanel.removeGLEventListener(new Square());
+                graphicPanel.addGLEventListener(new Triangle());
                 break;
             case "Reset":
+                //graphicPanel.removeGLEventListener(new Square());
+                graphicPanel.addGLEventListener(new Square());
                 break;
             case "Start/Stop rotation":
                 if (animator.isStarted())
