@@ -18,7 +18,7 @@ public class MyFrame extends JFrame{
         
         lateralMenu = new LateralMenu(menuWidth, menuHeight);
         menuBar = new MyMenuBar();
-        graphicPanel = new GraphicPanel("cube");
+        graphicPanel = new GraphicPanel("square");
 
         animator = new Animator(graphicPanel);
         animator.start();
