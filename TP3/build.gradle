@@ -1,8 +1,26 @@
 project.ext.lwjglVersion = "3.2.3"
 project.ext.lwjglNatives = "natives-macos"
+
 apply plugin: 'java'
 apply plugin: 'application'
+
+run {
+  if(project.hasProperty('arg')){
+    args(arg.split(','))
+  }
+  main = "tp3.HelloWorld"
+  classpath = sourceSets.main.runtimeClasspath
+  jvmArgs = [
+    "-XstartOnFirstThread"
+  ]
+  systemProperties System.getProperties()
+}
+
 sourceSets.main.java.srcDirs = [ "src/" ]
+
+application {
+	mainClass = 'tp3.HelloWorld'
+}
 
 repositories {
 	mavenCentral()
