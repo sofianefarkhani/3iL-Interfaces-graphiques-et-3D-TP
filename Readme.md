@@ -10,5 +10,5 @@ JDK 11, JRE 11, Jogamp
 
 # TP 3
 ## Requirements
-JDK 11, JRE 11
+JDK 11, JRE 11, LWJGL 3.2
 ## Usage
