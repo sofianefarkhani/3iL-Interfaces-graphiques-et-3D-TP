@@ -18,6 +18,7 @@ public class HelloWorld {
 	// The window handle
 	private long window;
 	private float rotate=0.0f;
+	private final int WIDTH = 300, HEIGHT = 300;
 
 	public void run() {
 		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -49,7 +50,7 @@ public class HelloWorld {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
 		// Create the window
-		window = glfwCreateWindow(300, 300, "Hello World!", NULL, NULL);
+		window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World!", NULL, NULL);
 		if ( window == NULL )
 			throw new RuntimeException("Failed to create the GLFW window");
 
@@ -108,7 +109,7 @@ public class HelloWorld {
 
         // Set frustum :
         float fh = 0.5f;
-        float aspect = 300.0f / 300.0f;
+        float aspect = (float) WIDTH / (float) HEIGHT;
         float fw = fh * aspect;
         glFrustum(-fw, fw, -fh, fh, 1.0f, 1000.0f);
         glMatrixMode(GL_MODELVIEW);
