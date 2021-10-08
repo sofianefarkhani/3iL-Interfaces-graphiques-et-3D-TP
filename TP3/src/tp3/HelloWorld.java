@@ -17,6 +17,7 @@ public class HelloWorld {
 
 	// The window handle
 	private long window;
+	private float rotate=0.0f;
 
 	public void run() {
 		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -94,13 +95,81 @@ public class HelloWorld {
 		// bindings available for use.
 		GL.createCapabilities();
 
+		glShadeModel(GL_SMOOTH);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClearDepth(1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+		//GL2 gl = glDrawable.getGL().getGL2();
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
+        // Set frustum :
+        float fh = 0.5f;
+        float aspect = 300.0f / 300.0f;
+        float fw = fh * aspect;
+        glFrustum(-fw, fw, -fh, fh, 1.0f, 1000.0f);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
 		// Set the clear color
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 		// Run the rendering loop until the user has attempted to close
 		// the window or has pressed the ESCAPE key.
 		while ( !glfwWindowShouldClose(window) ) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+
+			glLoadIdentity();
+
+			glTranslatef(0.0f, 0.0f, -5.0f);
+
+			glRotatef(rotate, 1.0f, 0.0f, 0.0f);
+       	 	glRotatef(rotate, 0.0f, 1.0f, 0.0f);
+        	glRotatef(rotate, 0.0f, 0.0f, 1.0f);
+
+			glBegin(GL_QUADS);
+			glColor3f(0f,0f,1f); //Blue color  
+			//Top Quadrilateral  
+			glVertex3f(0.5f, 0.5f, -0.5f); //Upper Right  
+			glVertex3f( -0.5f, 0.5f, -0.5f); // Upper Left  
+			glVertex3f( -0.5f, 0.5f, 0.5f ); // Bottom Left  
+			glVertex3f( 0.5f, 0.5f, 0.5f ); // Bottom Right  
+			//Below Quadrilateral  
+			glColor3f( 1f,0f,0f ); //Red color  
+			glVertex3f( 0.5f, -0.5f, 0.5f ); // Upper Right   
+			glVertex3f( -0.5f, -0.5f, 0.5f ); // Upper Left   
+			glVertex3f( -0.5f, -0.5f, -0.5f ); // Bottom Left   
+			glVertex3f( 0.5f, -0.5f, -0.5f ); // Bottom Right   
+				//Front Quadrilateral  
+			glColor3f( 0f,1f,0f ); //Green color  
+			glVertex3f( 0.5f, 0.5f, 0.5f ); // Upper Right   
+			glVertex3f( -0.5f, 0.5f, 0.5f ); // Upper Left   
+			glVertex3f( -0.5f, -0.5f, 0.5f ); // Bottom Left   
+			glVertex3f( 0.5f, -0.5f, 0.5f ); // Bottom Right  
+				//Back Quadrilateral  
+			glColor3f( 1f,1f,0f ); //Yellow  
+			glVertex3f( 0.5f, -0.5f, -0.5f ); // Bottom Left   
+			glVertex3f( -0.5f, -0.5f, -0.5f ); // Bottom Right   
+			glVertex3f( -0.5f, 0.5f, -0.5f ); // Upper Right   
+			glVertex3f( 0.5f, 0.5f, -0.5f ); // Upper Left   
+				//Left Quadrilateral  
+			glColor3f( 1f,0f,1f ); //Purple  
+			glVertex3f( -0.5f, 0.5f, 0.5f ); // Upper Right  
+			glVertex3f( -0.5f, 0.5f, -0.5f ); // Upper Left   
+			glVertex3f( -0.5f, -0.5f, -0.5f ); // Bottom Left   
+			glVertex3f( -0.5f, -0.5f, 0.5f ); // Bottom Right   
+				//Right Quadrilateral  
+			glColor3f( 0f,1f, 1f ); //Cyan  
+			glVertex3f( 0.5f, 0.5f, -0.5f ); // Upper Right   
+			glVertex3f( 0.5f, 0.5f, 0.5f ); // Upper Left   
+			glVertex3f( 0.5f, -0.5f, 0.5f ); // Bottom Left   
+			glVertex3f( 0.5f, -0.5f, -0.5f ); // Bottom Right   
+			glEnd();   
+
+			rotate += 0.2f;
 
 			glfwSwapBuffers(window); // swap the color buffers
 
