@@ -9,8 +9,12 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.math.collision.Sphere;
+import java.util.ArrayList;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -23,12 +27,19 @@ public class Application extends ApplicationAdapter {
     private Vector2 currentScreen;
     private Vector3 currentScene;
     private Vector3 tmpVector3;
+    private ArrayList<Sphere> scene;
+    Vector3 rayOrigin;
 
     @Override
     public void create() {
         // Get screen dimensions, in pixels :
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
+
+        scene = new ArrayList<Sphere>();
+        Sphere sphere = new Sphere(new Vector3(0f,0f,-5f), 0.5f);
+
+        scene.add(sphere);
 
         // Create a camera with perspective view :
         camera = new PerspectiveCamera(50.0f, screenWidth, screenHeight);
@@ -58,6 +69,8 @@ public class Application extends ApplicationAdapter {
         // Initialize coords of the first pixel, in screen space :
         currentScreen = new Vector2(0, 0);
 
+        rayOrigin = viewport.unproject(camera.position);
+
         // Others initializations :
         currentScene = new Vector3();
         tmpVector3 = new Vector3();
@@ -76,12 +89,13 @@ public class Application extends ApplicationAdapter {
             // Close th application :
             Gdx.app.exit();
         }
-
         // Reset the screen buffer colors :
         ScreenUtils.clear(0, 0, 0, 1);
+        lancerRayon();
 
         // Process pixels color :
-        processPixel();
+        //processPixel();
+        textureWithPixels.draw(pixels, 0, 0);
 
         // Render the texture with pixels :
         spriteBatch.begin();
@@ -104,7 +118,7 @@ public class Application extends ApplicationAdapter {
         boolean isOk = true;
 
         // Get color of current pixel :
-        Vector3 color = getColor((int) currentScreen.x, (int) currentScreen.y);
+        Vector3 color = new Vector3(1f,0f,0f);//getColor((int) currentScreen.x, (int) currentScreen.y);
 
         // Save color into pixels map :
         pixels.setColor(color.x, color.y, color.z, 1f);
@@ -134,14 +148,28 @@ public class Application extends ApplicationAdapter {
      */
     private Vector3 getColor(int xScreen, int yScreen)
     {
-        Vector3 color = new Vector3(1.f, 0f, 0f); 
-
+        Vector3 color = new Vector3(0.0f, 0.0f, 0.0f); 
+        
         // Get coords of current pixel, in scene space :
         tmpVector3.set(xScreen, yScreen, 0);
         currentScene = viewport.unproject(tmpVector3);
-
-        // To be continued ...
-
+        Vector3 rayDir = new Vector3(currentScene.x, currentScene.y, -1f);
+        Ray ray = new Ray(rayOrigin, rayDir);
+        for (int i = 0 ; i < scene.size() ; i++) {
+            if(Intersector.intersectRaySphere(ray, scene.get(i).center, scene.get(i).radius, null)) {
+                color = new Vector3(1f,0f,0f);
+            }
+        }
         return color;
+    }
+
+    private void lancerRayon() {
+        for (int i = 0 ; i < pixels.getWidth() ; i++) {
+            for (int j = 0 ; j < pixels.getHeight() ; j++) {
+                Vector3 colorFound = getColor(i,j);
+                pixels.setColor(colorFound.x,colorFound.y,colorFound.z,1f);
+                pixels.drawPixel(i,j);
+            }
+        }
     }
 }
