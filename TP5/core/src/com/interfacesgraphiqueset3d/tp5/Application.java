@@ -27,7 +27,7 @@ public class Application extends ApplicationAdapter {
     private Vector2 currentScreen;
     private Vector3 currentScene;
     private Vector3 tmpVector3;
-    private ArrayList<Sphere3D> scene;
+    private ArrayList<Object3D> scene;
     Vector3 rayOrigin;
 
     @Override
@@ -36,9 +36,9 @@ public class Application extends ApplicationAdapter {
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
-        scene = new ArrayList<Sphere3D>();
-        Sphere3D sphere = new Sphere3D(new Vector3(0f,0f,-5f), 1f, new Vector3(1f, 0f, 0f),1f, 1f, 1f);
-        Sphere3D sphere2 = new Sphere3D(new Vector3(0f,1f,-3f), 2f, new Vector3(0f, 1f, 0f),1f, 1f, 1f);
+        scene = new ArrayList<Object3D>();
+        Sphere3D sphere = new Sphere3D("sphere1", new Vector3(0f,0f,-5f), 1f, new Vector3(1f, 0f, 0f),1f, 1f, 1f);
+        Sphere3D sphere2 = new Sphere3D("sphere2", new Vector3(0f,1f,-3f), 2f, new Vector3(0f, 1f, 0f),1f, 1f, 1f);
 
         scene.add(sphere);
         scene.add(sphere2);
@@ -166,13 +166,15 @@ public class Application extends ApplicationAdapter {
         Vector3 posPix = new Vector3(currentScene.x, currentScene.y, 0f);
         Ray ray = new Ray(rayOrigin, posPix.sub(rayOrigin));
         for (int i = 0 ; i < scene.size() ; i++) {
-            if(Intersector.intersectRaySphere(ray, scene.get(i).getCenter(), scene.get(i).getRadius(), null)) {
+            if(scene.get(i) instanceof Sphere3D) {
+                if(Intersector.intersectRaySphere(ray, scene.get(i).getPos(), scene.get(i).getRadius(), null)) {
 
-                currentDst = rayOrigin.dst(scene.get(i).getCenter());
-                // Get color ambiant
-                if(currentDst < distanceMin) {
-                    colorAmbiant = scene.get(i).getColor();
-                    distanceMin = currentDst;
+                    currentDst = rayOrigin.dst(scene.get(i).getPos());
+                    // Get color ambiant
+                    if(currentDst < distanceMin) {
+                        colorAmbiant = scene.get(i).getColor();
+                        distanceMin = currentDst;
+                    }
                 }
             }
         }
@@ -180,7 +182,7 @@ public class Application extends ApplicationAdapter {
         return color;
     }
 
-    private void lancerRayon() {
+    private boolean lancerRayon() {
         for (int i = 0 ; i < pixels.getWidth() ; i++) {
             for (int j = 0 ; j < pixels.getHeight() ; j++) {
                 Vector3 colorFound = getColor(i,j);
@@ -188,5 +190,6 @@ public class Application extends ApplicationAdapter {
                 pixels.drawPixel(i,j);
             }
         }
+        return true;
     }
 }
