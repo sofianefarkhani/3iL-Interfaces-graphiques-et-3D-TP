@@ -27,7 +27,7 @@ public class Application extends ApplicationAdapter {
     private Vector2 currentScreen;
     private Vector3 currentScene;
     private Vector3 tmpVector3;
-    private ArrayList<Sphere> scene;
+    private ArrayList<Sphere3D> scene;
     Vector3 rayOrigin;
 
     @Override
@@ -36,8 +36,8 @@ public class Application extends ApplicationAdapter {
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
-        scene = new ArrayList<Sphere>();
-        Sphere sphere = new Sphere(new Vector3(0f,0f,-5f), 2f);
+        scene = new ArrayList<Sphere3D>();
+        Sphere3D sphere = new Sphere3D(new Vector3(0f,0f,-5f), 2f, new Vector3(1f, 0f, 0f),1f, 1f, 1f);
 
         scene.add(sphere);
 
@@ -161,8 +161,8 @@ public class Application extends ApplicationAdapter {
         Vector3 posPix = new Vector3(currentScene.x, currentScene.y, 0f);
         Ray ray = new Ray(rayOrigin, posPix.sub(rayOrigin));
         for (int i = 0 ; i < scene.size() ; i++) {
-            if(Intersector.intersectRaySphere(ray, scene.get(i).center, scene.get(i).radius, null)) {
-                color = new Vector3(1f,0f,0f);
+            if(Intersector.intersectRaySphere(ray, scene.get(i).getCenter(), scene.get(i).getRadius(), null)) {
+                color = scene.get(i).getColor();
             }
         }
         return color;
