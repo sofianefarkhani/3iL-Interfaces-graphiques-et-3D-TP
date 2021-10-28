@@ -37,9 +37,11 @@ public class Application extends ApplicationAdapter {
         int screenHeight = Gdx.graphics.getHeight();
 
         scene = new ArrayList<Sphere3D>();
-        Sphere3D sphere = new Sphere3D(new Vector3(0f,0f,-5f), 2f, new Vector3(1f, 0f, 0f),1f, 1f, 1f);
+        Sphere3D sphere = new Sphere3D(new Vector3(0f,0f,-5f), 1f, new Vector3(1f, 0f, 0f),1f, 1f, 1f);
+        Sphere3D sphere2 = new Sphere3D(new Vector3(0f,1f,-3f), 2f, new Vector3(0f, 1f, 0f),1f, 1f, 1f);
 
         scene.add(sphere);
+        scene.add(sphere2);
 
         // Create a camera with perspective view :
         camera = new PerspectiveCamera(50.0f, screenWidth, screenHeight);
@@ -152,7 +154,10 @@ public class Application extends ApplicationAdapter {
      */
     private Vector3 getColor(int xScreen, int yScreen)
     {
+        float distanceMin = 99999999f;
+        float currentDst = 0f;
         Vector3 color = new Vector3(0.0f, 0.0f, 0.0f); 
+        Vector3 colorAmbiant = new Vector3(0f,0f,0f), colorDiffuse, colorSpecular;
         
         // Get coords of current pixel, in scene space :
         tmpVector3.set(xScreen, yScreen, 0);
@@ -162,9 +167,16 @@ public class Application extends ApplicationAdapter {
         Ray ray = new Ray(rayOrigin, posPix.sub(rayOrigin));
         for (int i = 0 ; i < scene.size() ; i++) {
             if(Intersector.intersectRaySphere(ray, scene.get(i).getCenter(), scene.get(i).getRadius(), null)) {
-                color = scene.get(i).getColor();
+
+                currentDst = rayOrigin.dst(scene.get(i).getCenter());
+                // Get color ambiant
+                if(currentDst < distanceMin) {
+                    colorAmbiant = scene.get(i).getColor();
+                    distanceMin = currentDst;
+                }
             }
         }
+        color = colorAmbiant;
         return color;
     }
 
