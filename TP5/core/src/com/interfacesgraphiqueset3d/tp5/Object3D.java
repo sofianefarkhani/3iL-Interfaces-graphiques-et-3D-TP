@@ -20,9 +20,8 @@ public abstract class Object3D {
         this.radius = radius;
     }
 
-    public Object3D(String nom, Vector3 color, Vector3 pos) {
+    public Object3D(String nom, Vector3 pos) {
         this.nom = nom;
-        this.color = color;
         this.pos = pos;
     }
 
