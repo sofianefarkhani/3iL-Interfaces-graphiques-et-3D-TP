@@ -37,7 +37,7 @@ public class Application extends ApplicationAdapter {
         int screenHeight = Gdx.graphics.getHeight();
 
         scene = new ArrayList<Sphere>();
-        Sphere sphere = new Sphere(new Vector3(0f,0f,-5f), 0.5f);
+        Sphere sphere = new Sphere(new Vector3(0f,0f,-5f), 2f);
 
         scene.add(sphere);
 
@@ -45,7 +45,7 @@ public class Application extends ApplicationAdapter {
         camera = new PerspectiveCamera(50.0f, screenWidth, screenHeight);
         camera.position.set(0f, 0f, -10f);
         camera.lookAt(0, 0, 0);
-        camera.near = 1f;
+        camera.near = 10f;
         camera.far = 500f;
         camera.update();
 
@@ -69,7 +69,7 @@ public class Application extends ApplicationAdapter {
         // Initialize coords of the first pixel, in screen space :
         currentScreen = new Vector2(0, 0);
 
-        rayOrigin = viewport.unproject(camera.position);
+        rayOrigin = camera.position;
 
         // Others initializations :
         currentScene = new Vector3();
@@ -91,10 +91,14 @@ public class Application extends ApplicationAdapter {
         }
         // Reset the screen buffer colors :
         ScreenUtils.clear(0, 0, 0, 1);
+
+        // Launch ray
         lancerRayon();
 
         // Process pixels color :
         //processPixel();
+
+        // Refresh texture
         textureWithPixels.draw(pixels, 0, 0);
 
         // Render the texture with pixels :
@@ -118,7 +122,7 @@ public class Application extends ApplicationAdapter {
         boolean isOk = true;
 
         // Get color of current pixel :
-        Vector3 color = new Vector3(1f,0f,0f);//getColor((int) currentScreen.x, (int) currentScreen.y);
+        Vector3 color = getColor((int) currentScreen.x, (int) currentScreen.y);
 
         // Save color into pixels map :
         pixels.setColor(color.x, color.y, color.z, 1f);
@@ -152,9 +156,10 @@ public class Application extends ApplicationAdapter {
         
         // Get coords of current pixel, in scene space :
         tmpVector3.set(xScreen, yScreen, 0);
-        currentScene = viewport.unproject(tmpVector3);
-        Vector3 rayDir = new Vector3(currentScene.x, currentScene.y, -1f);
-        Ray ray = new Ray(rayOrigin, rayDir);
+        currentScene = camera.unproject(tmpVector3);
+        //currentScene = viewport.unproject(tmpVector3);
+        Vector3 posPix = new Vector3(currentScene.x, currentScene.y, 0f);
+        Ray ray = new Ray(rayOrigin, posPix.sub(rayOrigin));
         for (int i = 0 ; i < scene.size() ; i++) {
             if(Intersector.intersectRaySphere(ray, scene.get(i).center, scene.get(i).radius, null)) {
                 color = new Vector3(1f,0f,0f);
