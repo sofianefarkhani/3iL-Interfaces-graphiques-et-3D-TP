@@ -35,6 +35,7 @@ public class Application extends ApplicationAdapter {
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
+        // Define scene
         scene = new ArrayList<Object3D>();
         Sphere3D sphere = new Sphere3D("sphere1", new Vector3(0f,0f,-5f), 1f, new Vector3(1f, 0f, 0f),1f, 1f, 1f);
         Sphere3D sphere2 = new Sphere3D("sphere2", new Vector3(0f,1f,-3f), 2f, new Vector3(0f, 1f, 0f),1f, 1f, 1f);
@@ -161,7 +162,6 @@ public class Application extends ApplicationAdapter {
         
         Vector3 color = new Vector3(0.0f, 0.0f, 0.0f); 
         
-        
         if (rec >= 1) {
             Object3D intersectMin = null;
             float distanceMin = 99999999f, currentDst, iAmb = 1f, kAmb = 1f, iDiff = 1f, kDiff = 1f;
@@ -174,8 +174,8 @@ public class Application extends ApplicationAdapter {
             Vector3 posPix = new Vector3(currentScene.x, currentScene.y, 0f);
             
             Ray ray = new Ray(rayOrigin, posPix.sub(rayOrigin));
-            
 
+            // Test interection ray with sphere
             for (int i = 0 ; i < scene.size() ; i++) {
                 if(scene.get(i) instanceof Sphere3D) {
                     if(Intersector.intersectRaySphere(ray, scene.get(i).getPos(), scene.get(i).getRadius(), null)) {
@@ -214,7 +214,7 @@ public class Application extends ApplicationAdapter {
     }
 
     /**
-     * 
+     * Launch ray in 3D scene
      */
     private boolean lancerRayon() {
         for (int i = 0 ; i < pixels.getWidth() ; i++) {
